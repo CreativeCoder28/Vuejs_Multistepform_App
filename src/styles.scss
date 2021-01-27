@@ -48,7 +48,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 #nav {
-  padding: 30px;
+  padding: 10px;
 
   a {
     font-weight: bold;
@@ -60,20 +60,22 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+#logo{
+  flex-wrap: nowrap;
+  display: inline-block;
+  margin: 10px 20px;
+ }
+ .logo {
   color: $text-primary;
-}
+  }
+
 
 
 /*Header style 
 ----------------------------------------------*/
 .header {
   position: fixed;
+  top: 0;
   width: 100%;
   z-index: 99;
   background-color: $bg-primary;
@@ -131,58 +133,57 @@ h6 {
 /*footer styles
 ---------------------------------------------.*/
 
-.main-footer {
-  justify-content: center;
+.main-footer { 
   background: $highlight-background;
   bottom:0;
   width: 100%;
   position: absolute;
-  padding: 10px 0; 
+  justify-content: center;
 }
 
 
-
-.main-footer>input .search {
-  background-color: transparent;
-  box-shadow: none;
+.search {
+  background-color: $bg-secondary;
+  justify-self: center;
+  border-radius: 5px;
+  height: 30px;
+  width: auto;
+  margin-bottom: 10px;
 }
 
 nav {
   width: 100%;
-  color: var(--text-primary);
+  color:$text-secondary;
 }
 nav ul a {
   margin: 0 10px;
-  color: var(--text-primary);
+  color:$text-primary;
 }
 
 nav ul a.active, 
 nav ul a.hover {
-  background: #bbbcbd;
+  background: $text-primary;
   transition: .5s;
-  color: orange;
+  color: $highlight-color;
 }
 
 .footer-panel {
-  flex-grow: 1;
   height: 30px;
   background-color: $bg-primary;
   display: flex;
-  position: relative;
   color: $text-primary;
-  justify-content: center;
+  justify-content: space-evenly;
   padding: 5px 0 ;
 }
 
 .social {
-  margin-top: 20px;
-  text-align: center;
+  margin-top: 20px; 
   justify-content: center;
 }
 
-.social i {
-  margin: 15px;
-  padding: 10px;
-  color: $bg-primary;
+.social h4,
+.social a {
+  margin: 10px;
+  color: $text-secondary;
 
 }

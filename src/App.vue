@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <webapp-header title="Wonderful world"></webapp-header>
-    <router-view />
+    <div class="container">
+        <main>
+            <router-view/>
+        </main>
+    </div>
     <webapp-footer></webapp-footer>
   </div>
 </template>
@@ -22,4 +26,14 @@ export default {
 
 <style lang="scss">
 
+.container {
+    display: flex;
+}
+
+
+main {
+    flex: 3;
+    order: 2;
+    margin-top: 100px;
+}
 </style>
