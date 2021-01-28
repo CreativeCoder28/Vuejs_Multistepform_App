@@ -1,9 +1,9 @@
 <template>
   <header class="header">
     <nav class="navbar navbar-light" id="nav">
-      <div id="logo d-flex flex-row">
+      <div id="logo d-flex flex-row" href="/">
         <img height="30px" alt="Vue logo" src="../assets/logo.png" />
-        <h3 class="logo" href="/">{{ title }}</h3>
+        <h3 class="logo" >{{ title }}</h3>
       </div>
       <ul>
         <router-link to="/">Home</router-link>

@@ -1,12 +1,15 @@
 <template>
+
   <form class="multistep-form" @submit="formSubmit">
-    <!--  <ul class="progress-bar">
+    <h1>Registration Page</h1>
+    <hr />
+    <ul class="progressbar">
       <li class="active">Personal</li>
       <li>Address</li>
       <li>Other</li>
       <li>Message</li>
-    </ul>-->
-    <fieldset v-if="step == 1" class="panel">
+    </ul>
+    <fieldset v-if="step == 1" class="panel" :class="animation">
       <div class="panel-heading">
         <div class="panel-title">
           <h3>Personal Information</h3>
@@ -170,12 +173,16 @@
         />
       </div>
     </fieldset>
+    
   </form>
+ 
+
 </template>
 
 <script>
 import { required, email } from "@vuelidate/validators";
 import { VueEditor } from "vue2-editor";
+
 
 export default {
   name: "content",
@@ -228,9 +235,12 @@ export default {
 
     submit: function() {
       confirm("Entry have been saved");
-      this.step = 0;
+      this.step = 1;
+      /*setTimeout(()=> this.redirect(),1000)*/
     },
-
+  /*  redirect(){
+      this.$router.path.push((name: "about"))
+    },*/
     formSubmit: function() {
       if (this.$v.$invalid) return;
 
@@ -244,9 +254,7 @@ export default {
       };
     }
   },
-  mounted() {
-    // alert("Saved");
-  }
+  animation: 'animate-in',
 };
 </script>
 
@@ -255,6 +263,23 @@ export default {
 @mixin flexbox() {
   display: flex;
   justify-content: center;
+}
+
+.animate-in{
+  animation: in .6s ease-in-out
+}
+
+@keyframes in {
+  0%{
+    opacity: 0;
+    transform: scale(0.8) ;
+  }
+
+  100%{
+    opacity: 1;
+    transform: scale(1);
+  }
+  
 }
 
 .multistep-form {
@@ -309,7 +334,7 @@ textarea {
   font-weight: bold;
   color: white;
   border: 1px solid transparent;
-  border-radius: 15px;
+  border-radius: 5px;
   cursor: pointer;
   padding: 10px 5px;
   margin: 10px;
@@ -322,16 +347,23 @@ textarea {
 
 /*progressbar*/
 .progressbar {
+ 
+  display: --webkit-flex;
+  display: --moz-flex;
+  display: -ms-flex;
+  display: flex;
+  flex-direction: row;  
+  background-color: transparent;
   margin-bottom: 30px;
-  overflow: hidden;
+
   /*CSS counters to number the steps*/
   counter-reset: step;
 }
 
 .progressbar li {
   list-style-type: none;
-  color: white;
-  text-transform: uppercase;
+  color: #333;
+  text-transform: uppercase;  
   font-size: 9px;
   width: 33.33%;
   float: left;
@@ -347,8 +379,8 @@ textarea {
   line-height: 26px;
   display: block;
   font-size: 12px;
-  color: #333;
-  background: white;
+  color: white;
+  background: rgb(90, 89, 89);
   border-radius: 25px;
   margin: 0 auto 10px auto;
 }
@@ -358,23 +390,21 @@ textarea {
   content: "";
   width: 100%;
   height: 2px;
-  background: white;
+  background: #e2c209; 
   position: absolute;
   left: -50%;
   top: 9px;
-  z-index: -1; /*put it behind the numbers*/
+  z-index: -1; 
 }
 
-.progressbar li:first-child:after {
-  /*connector not needed before the first step*/
+.progressbar li:first-child:after { 
   content: none;
 }
 
-/*marking active/completed steps green*/
-/*The number of the step and the connector before it = green*/
+/*The number of the step and the connector before it = highlighted*/
 .progressbar li.active:before,
-#progressbar li.active:after {
-  background: #09e24a;
-  color: #09e24a;
+.progressbar li.active:after {
+  background:#e2c209;
+  color: #333;
 }
 </style>
