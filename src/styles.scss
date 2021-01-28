@@ -5,7 +5,7 @@ $text-primary: rgb(255, 255, 255);
 $text-secondary: #2c3e50;
 $bg-primary: rgb(65, 64, 63);
 $bg-secondary: white;
-$highlight-background: rgba(212, 211, 211, 0.8);
+$highlight-background:  #dfdfdf;
 $highlight-color: #e2c209;
 
 
@@ -17,10 +17,13 @@ $highlight-color: #e2c209;
 
 html, body {
   font-family: 'Roboto', sans-serif;
+  height: 100vh;
+
 }
 
 body::-webkit-scrollbar {
   width: 0.3rem;
+ 
 }
 
 body::-webkit-scrollbar-thumb {
@@ -117,7 +120,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .panel-heading {
-  background: var(--highlight-background) !important;
+  background: $highlight-background !important;
   border-radius: 0;
   padding: 15px;
   border-bottom: 0 !important;
@@ -136,8 +139,7 @@ body::-webkit-scrollbar-thumb {
 .main-footer { 
   background: $highlight-background;
   bottom:0;
-  width: 100%;
-  position: absolute;
+  width: 100%; 
   justify-content: center;
 }
 
@@ -145,6 +147,7 @@ body::-webkit-scrollbar-thumb {
 .search {
   background-color: $bg-secondary;
   justify-self: center;
+
   border-radius: 5px;
   height: 30px;
   width: auto;
@@ -181,9 +184,11 @@ nav ul a.hover {
   justify-content: center;
 }
 
-.social h4,
+.social h4{
+  margin-top: 10px;
+}
 .social a {
-  margin: 10px;
+  margin: 10px;  
   color: $text-secondary;
 
 }

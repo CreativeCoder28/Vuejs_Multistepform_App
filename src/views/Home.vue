@@ -1,7 +1,7 @@
 <template>
-  <div class="home">  
-      <h1>Registration Page</h1>
-      <hr> 
+  <div class="home">
+    <h1>Registration Page</h1>
+    <hr />
     <Content msg="Welcome to Your Vue.js App" />
   </div>
 </template>
