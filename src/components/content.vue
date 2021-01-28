@@ -1,184 +1,198 @@
 <template>
-  <form class="multistep-form" @submit="formSubmit">
-    <h1>Registration Page</h1>
-    <hr />
-    <ul class="progressbar">
-      <li class="active">Personal</li>
-      <li>Address</li>
-      <li>Other</li>
-      <li>Message</li>
-    </ul>
-    <fieldset v-if="step == 1" class="panel">
-      <div class="panel-heading">
-        <div class="panel-title">
-          <h3>Personal Information</h3>
-          <h6>Step 1</h6>
+  <ValidationObserver v-slot="{ handleSubmit }">
+    <form class="multistep-form" @submit.prevent="handleSubmit(formSubmit)">
+      <h1>Registration Page</h1>
+      <hr />
+      <ul class="progressbar">
+        <li class="active">Personal</li>
+        <li>Address</li>
+        <li>Other</li>
+        <li>Message</li>
+      </ul>
+      <fieldset v-if="step == 1" class="panel">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <h3>Personal Information</h3>
+            <h6>Step 1</h6>
+          </div>
         </div>
-      </div>
-      <div class="panel-body">
-        <input
-          type="text"
-          v-model="firstName"
-          class="form-input"
-          name="firstName"
-          placeholder="First Name"
-          required
-        />
-        <input
-          type="text"
-          v-model="lastName"
-          class="form-input"
-          name="lastName"
-          placeholder="Last Name"
-          required
-        />
-        <input
-          type="email"
-          v-model="email"
-          class="form-input"
-          name="email"
-          placeholder="Email Address"
-          required
-        />
-        <input
-          type="button"
-          name="next"
-          class="next action-button"
-          value="Next"
-          v-if="step != totalSteps"
-          @click.prevent="next_Step"
-        />
-      </div>
-    </fieldset>
-
-    <fieldset v-if="step == 2" class="panel">
-      <div class="panel-heading">
-        <div class="panel-title">
-          <h3>Address Information</h3>
-          <h6>Step 2</h6>
-        </div>
-      </div>
-      <div class="panel-body">
-        <input
-          type="text"
-          v-model="hNumber"
-          class="form-input"
-          name="hNumber"
-          placeholder="House Number"
-          required
-        /> 
+        <div class="panel-body">
+           <ValidationProvider name="First Name" rules="required|alpha" v-slot="{ errors }">
+            <span class="errormsg">{{errors[0] }}</span>
+            <input
+              type="text"
+              v-model="firstName"
+              class="form-input"
+              name="firstName"
+              placeholder="First Name"
+              required
+            />            
+           </ValidationProvider>
+        <ValidationProvider name="Last Name" rules="required|alpha" v-slot="{ errors }">
+          <span class="errormsg">{{errors[0] }}</span>
           <input
-          type="text"
-          v-model="streetName"
-          class="form-input"
-          name="addressLine2"
-          placeholder="Address Line"
-          required
-        />      
-        <input
-          type="number"
-          v-model="postcode"
-          class="form-input"
-          name="postalCode"
-          placeholder="Postal Code"
-          required
-        />
-
-        <select
-          id="State"
-          name="stateName"
-          v-model="stateName"
-          @change="handleChange"
-        >
-          <optgroup title="state">
-            <option value="States" selected>States</option>
-            <option value="Hesse">Hesse</option>
-            <option value="Essen">Essen</option>
-            <option value="Saxony">Saxony</option>
-            <option value="United Kingdom">United Kingdom</option>
-          </optgroup>
-        </select>
-        <input
-          type="button"
-          name="previous"
-          class="previous action-button"
-          value="Previous"
-          v-if="step != 1"
-          @click.prevent="previous_Step"
-        />
-        <input
-          type="button"
-          name="next"
-          class="next action-button"
-          value="Next"
-          v-if="step != totalSteps"
-          @click.prevent="next_Step"
-        />
-      </div>
-    </fieldset>
-
-    <fieldset v-if="step == 3" class="panel">
-      <div class="panel-heading">
-        <div class="panel-title">
-          <h3>Other Information</h3>
-          <h6>Step 3</h6>
+            type="text"
+            v-model="lastName"
+            class="form-input"
+            name="lastName"
+            placeholder="Last Name"
+            required
+          />
+        </ValidationProvider>
+        <ValidationProvider name="email" rules="required|email" v-slot="{ errors }">
+            <span class="errormsg">{{errors[0] }}</span>
+            <input
+              type="email"
+              v-model="email"
+              class="form-input"
+              name="email"
+              placeholder="Email Address"
+              required
+            />
+        </ValidationProvider>
+          <input
+            type="submit"
+            name="next"
+            class="next action-button"
+            value="Next"
+            v-if="step != totalSteps"
+            @click.prevent="next_Step"
+          />
         </div>
-      </div>
-      <div class="panel-body">
-        <textarea
-          v-model="comments"
-          class="form-input"
-          name="comments"
-          placeholder="Enter other relevant Information"
-        ></textarea>
-        <input
-          type="button"
-          name="previous"
-          class="previous action-button"
-          value="Previous"
-          v-if="step != 1"
-          @click.prevent="previous_Step"
-        />
-        <input
-          type="button"
-          name="next"
-          class="next action-button"
-          value="Next"
-          v-if="step != totalSteps"
-          @click.prevent="next_Step"
-        />
-      </div>
-    </fieldset>
+      </fieldset>
 
-    <fieldset v-if="step == 4" class="panel">
-      <div class="panel-heading">
-        <div class="panel-title">
-          <h3>Write Message</h3>
-          <h6>Step 4</h6>
+      <fieldset v-if="step == 2" class="panel">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <h3>Address Information</h3>
+            <h6>Step 2</h6>
+          </div>
         </div>
-      </div>
-      <div class="panel-body">
-        <vue-editor v-model="comments"></vue-editor>
+        <div class="panel-body">
+        <ValidationProvider name="House Number" rules="required|number" v-slot="{ errors }">
+          <span class="errormsg">{{errors[0] }}</span>
+          <input
+              type="text"
+              v-model="hNumber"
+              class="form-input"
+              name="hNumber"
+              placeholder="House Number"             
+            />
+        </ValidationProvider>
+        <ValidationProvider name="Address" rules="required|alpha" v-slot="{ errors }">
+          <span class="errormsg">{{errors[0] }}</span>
+          <input
+            type="text"
+            v-model="streetName"
+            class="form-input"
+            name="addressLine2"
+            placeholder="Address Line"           
+          />
+        </ValidationProvider>
+          <input
+            type="number"
+            v-model="postcode"
+            class="form-input"
+            name="postalCode"
+            placeholder="Postal Code"          
+          />
 
-        <input
-          type="button"
-          name="previous"
-          class="previous action-button"
-          value="Previous"
-          v-if="step != 1"
-          @click.prevent="previous_Step"
-        />
+          <select
+            id="State"
+            name="stateName"
+            v-model="stateName"
+            @change="handleChange"
+          >
+            <optgroup title="state">
+              <option value="States" selected>States</option>
+              <option value="Hesse">Hesse</option>
+              <option value="Essen">Essen</option>
+              <option value="Saxony">Saxony</option>
+              <option value="United Kingdom">United Kingdom</option>
+            </optgroup>
+          </select>
+          <input
+            type="button"
+            name="previous"
+            class="previous action-button"
+            value="Previous"
+            v-if="step != 1"
+            @click.prevent="previous_Step"
+          />
+          <input
+            type="button"
+            name="next"
+            class="next action-button"
+            value="Next"
+            v-if="step != totalSteps"
+            @click.prevent="next_Step"
+          />
+        </div>
+      </fieldset>
 
-        <input
-          type="button"
-          name="submit"
-          class="previous action-button"
-          value="Submit"
-          @click="submit"
-        />
-      </div>
-    </fieldset>
-  </form>
+      <fieldset v-if="step == 3" class="panel">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <h3>Other Information</h3>
+            <h6>Step 3</h6>
+          </div>
+        </div>
+        <div class="panel-body">
+          <textarea
+            v-model="comments"
+            class="form-input"
+            name="comments"
+            placeholder="Enter other relevant Information"
+          ></textarea>
+          <input
+            type="button"
+            name="previous"
+            class="previous action-button"
+            value="Previous"
+            v-if="step != 1"
+            @click.prevent="previous_Step"
+          />
+          <input
+            type="button"
+            name="next"
+            class="next action-button"
+            value="Next"
+            v-if="step != totalSteps"
+            @click.prevent="next_Step"
+          />
+        </div>
+      </fieldset>
+
+      <fieldset v-if="step == 4" class="panel">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <h3>Write Message</h3>
+            <h6>Step 4</h6>
+          </div>
+        </div>
+        <div class="panel-body">
+          <vue-editor v-model="comments"></vue-editor>
+
+          <input
+            type="button"
+            name="previous"
+            class="previous action-button"
+            value="Previous"
+            v-if="step != 1"
+            @click.prevent="previous_Step"
+          />
+
+          <input
+            type="button"
+            name="submit"
+            class="previous action-button"
+            value="Submit"
+            @click="submit"
+          />
+        </div>
+      </fieldset>
+    </form>
+  </ValidationObserver>
 </template>
 
 <script>
@@ -324,6 +338,14 @@ export default {
 @mixin flexbox() {
   display: flex;
   justify-content: center;
+}
+
+.errormsg{
+  color: red;
+  font-size: 12px;
+  margin-top: -10px;
+  text-align: start; 
+  display:table;
 }
 
 .multistep-form {

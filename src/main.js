@@ -1,5 +1,6 @@
 import Vue from "vue";
-import { VuelidatePlugin } from "@vuelidate/core";
+import { ValidationProvider } from "vee-validate/dist/vee-validate.full.esm";
+import { ValidationObserver } from "vee-validate";
 import VueSimpleAlert from "vue-simple-alert";
 import "./plugins/bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,7 +13,8 @@ import "@fortawesome/fontawesome-free/js/all.js";
 import jQuery from "jquery";
 global.$ = jQuery;
 
-Vue.use(VuelidatePlugin);
+Vue.component("ValidationProvider", ValidationProvider);
+Vue.component("ValidationObserver", ValidationObserver);
 
 Vue.use(VueSimpleAlert);
 Vue.config.productionTip = false;
