@@ -69,7 +69,7 @@
           </div>
         </div>
         <div class="panel-body">
-        <ValidationProvider name="House Number" rules="required|number" v-slot="{ errors }">
+        <ValidationProvider name="House Number" rules="required|numeric" v-slot="{ errors }">
           <span class="errormsg">{{errors[0] }}</span>
           <input
               type="text"
