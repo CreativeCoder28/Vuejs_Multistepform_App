@@ -1,5 +1,4 @@
 <template>
-
   <form class="multistep-form" @submit="formSubmit">
     <h1>Registration Page</h1>
     <hr />
@@ -9,7 +8,7 @@
       <li>Other</li>
       <li>Message</li>
     </ul>
-    <fieldset v-if="step == 1" class="panel" :class="animation">
+    <fieldset v-if="step == 1" class="panel" >
       <div class="panel-heading">
         <div class="panel-title">
           <h3>Personal Information</h3>
@@ -19,7 +18,7 @@
       <div class="panel-body">
         <input
           type="text"
-          v-model="form.firstName"
+          v-model="firstName"
           class="form-input"
           name="firstName"
           placeholder="First Name"
@@ -27,7 +26,7 @@
         />
         <input
           type="text"
-          v-model="form.lastName"
+          v-model="lastName"
           class="form-input"
           name="lastName"
           placeholder="Last Name"
@@ -35,7 +34,7 @@
         />
         <input
           type="email"
-          v-model="form.email"
+          v-model="email"
           class="form-input"
           name="email"
           placeholder="Email Address"
@@ -62,35 +61,35 @@
       <div class="panel-body">
         <input
           type="text"
-          v-model="form.hNumber"
+          v-model="hNumber"
           class="form-input"
           name="hNumber"
           placeholder="House Number"
           required
         />
         <textarea
-          v-model="form.streetName"
+          v-model="streetName"
           class="form-input"
           name="streetName"
           placeholder="Enter other relevant Information"
-        ></textarea>        
+        ></textarea>
         <input
           type="number"
-          v-model="form.postCode"
+          v-model="postCode"
           class="form-input"
           name="postalCode"
           placeholder="Postal Code"
           required
         />
-        <select  id="State" name="stateName" v-model="form.stateName">
+        <select id="State" name="stateName" v-model="stateName">
           <optgroup title="state">
             <option value="States" selected>States</option>
-            <option value="Hesse" >Hesse</option>
+            <option value="Hesse">Hesse</option>
             <option value="Essen">Essen</option>
             <option value="Saxony">Saxony</option>
             <option value="United Kingdom">United Kingdom</option>
           </optgroup>
-        </select>                
+        </select>
         <input
           type="button"
           name="previous"
@@ -118,7 +117,7 @@
         </div>
       </div>
       <div class="panel-body">
-        <vue-editor v-model="form.comments"></vue-editor>
+        <vue-editor v-model="comments"></vue-editor>
         <input
           type="button"
           name="previous"
@@ -146,14 +145,14 @@
         </div>
       </div>
       <div class="panel-body">
-        <p>First Name: {{ form.firstName }}</p>
-        <p>Last Name: {{ form.lastName }}</p>
-        <p>Email: {{ form.email }}</p>
-        <p>Address: {{ form.hNumber }}</p>
-        <p>Street Name: {{ form.streetName }}</p>
-        <p>Postal Code: {{ form.postCode }}</p>
-        <p>State Name: {{ form.stateName }}</p>
-        <p>Message: {{ form.comments }}</p>
+        <p>First Name: {{ firstName }}</p>
+        <p>Last Name: {{ lastName }}</p>
+        <p>Email: {{ email }}</p>
+        <p>Address: {{ hNumber }}</p>
+        <p>Street Name: {{ streetName }}</p>
+        <p>Postal Code: {{ postCode }}</p>
+        <p>State Name: {{ stateName }}</p>
+        <p>Message: {{ comments }}</p>
 
         <input
           type="button"
@@ -173,16 +172,12 @@
         />
       </div>
     </fieldset>
-    
   </form>
- 
-
 </template>
 
 <script>
 import { required, email } from "@vuelidate/validators";
 import { VueEditor } from "vue2-editor";
-
 
 export default {
   name: "content",
@@ -197,16 +192,7 @@ export default {
       error: [],
       step: 1,
       totalSteps: 4,
-      form: {
-        firstName: null,
-        lastName: null,
-        email: null,
-        streetName: null,
-        hNumber: null,
-        postcode: null,
-        stateName: null,
-        comments: null
-      },
+      
       validation: {
         firstName: {
           required
@@ -224,6 +210,28 @@ export default {
       }
     };
   },
+  computed:{
+    firstName:{ get(){ return this.$store.state.firstName},
+    set(value){this.$store.commit('setFirstName', {firstName: value})}},
+
+    lastName:{ get(){ return this.$store.state.lastName},
+    set(value){this.$store.commit('setLastName', {lastName: value})}},
+    
+    email:{ get(){ return this.$store.state.email},
+    set(value){this.$store.commit('setEmail', {email: value})}},
+
+    hNumber:{ get(){ return this.$store.state.hNumber},
+    set(value){this.$store.commit('setHNumber', {hNumber: value})}},
+
+    postcode:{ get(){ return this.$store.state.postcode},
+    set(value){this.$store.commit('setPostCode', {postcode: value})}},
+
+    stateName:{ get(){ return this.$store.state.stateName},
+    set(value){this.$store.commit('setStateName', {stateName: value})}},
+
+    comments:{ get(){ return this.$store.state.comments},
+    set(value){this.$store.commit('setComments', {comments: value})}}
+  },
   methods: {
     previous_Step: function() {
       this.step--;
@@ -234,13 +242,10 @@ export default {
     },
 
     submit: function() {
-      confirm("Entry have been saved");
-      this.step = 1;
-      /*setTimeout(()=> this.redirect(),1000)*/
+     // confirm("Entry have been saved");
+      this.step = 1;     
+      this.$router.push({  path: "submit"});
     },
-  /*  redirect(){
-      this.$router.path.push((name: "about"))
-    },*/
     formSubmit: function() {
       if (this.$v.$invalid) return;
 
@@ -253,8 +258,7 @@ export default {
         error: validation.$error
       };
     }
-  },
-  animation: 'animate-in',
+  }
 };
 </script>
 
@@ -263,23 +267,6 @@ export default {
 @mixin flexbox() {
   display: flex;
   justify-content: center;
-}
-
-.animate-in{
-  animation: in .6s ease-in-out
-}
-
-@keyframes in {
-  0%{
-    opacity: 0;
-    transform: scale(0.8) ;
-  }
-
-  100%{
-    opacity: 1;
-    transform: scale(1);
-  }
-  
 }
 
 .multistep-form {
@@ -299,7 +286,8 @@ export default {
   display: none;
 }
 
-.form-input, select,
+.form-input,
+select,
 textarea {
   background: rgba(255, 255, 255, 0.1);
   border: none;
@@ -347,12 +335,11 @@ textarea {
 
 /*progressbar*/
 .progressbar {
- 
   display: --webkit-flex;
   display: --moz-flex;
   display: -ms-flex;
   display: flex;
-  flex-direction: row;  
+  flex-direction: row;
   background-color: transparent;
   margin-bottom: 30px;
 
@@ -363,7 +350,7 @@ textarea {
 .progressbar li {
   list-style-type: none;
   color: #333;
-  text-transform: uppercase;  
+  text-transform: uppercase;
   font-size: 9px;
   width: 33.33%;
   float: left;
@@ -390,21 +377,21 @@ textarea {
   content: "";
   width: 100%;
   height: 2px;
-  background: #e2c209; 
+  background: #e2c209;
   position: absolute;
   left: -50%;
   top: 9px;
-  z-index: -1; 
+  z-index: -1;
 }
 
-.progressbar li:first-child:after { 
+.progressbar li:first-child:after {
   content: none;
 }
 
 /*The number of the step and the connector before it = highlighted*/
 .progressbar li.active:before,
 .progressbar li.active:after {
-  background:#e2c209;
+  background: #e2c209;
   color: #333;
 }
 </style>
