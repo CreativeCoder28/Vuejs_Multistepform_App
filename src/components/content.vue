@@ -8,7 +8,7 @@
       <li>Other</li>
       <li>Message</li>
     </ul>
-    <fieldset v-if="step == 1" class="panel" >
+    <fieldset v-if="step == 1" class="panel">
       <div class="panel-heading">
         <div class="panel-title">
           <h3>Personal Information</h3>
@@ -66,22 +66,30 @@
           name="hNumber"
           placeholder="House Number"
           required
-        />
-        <textarea
+        /> 
+          <input
+          type="text"
           v-model="streetName"
           class="form-input"
-          name="streetName"
-          placeholder="Enter other relevant Information"
-        ></textarea>
+          name="addressLine2"
+          placeholder="Address Line"
+          required
+        />      
         <input
           type="number"
-          v-model="postCode"
+          v-model="postcode"
           class="form-input"
           name="postalCode"
           placeholder="Postal Code"
           required
         />
-        <select id="State" name="stateName" v-model="stateName">
+
+        <select
+          id="State"
+          name="stateName"
+          v-model="stateName"
+          @change="handleChange"
+        >
           <optgroup title="state">
             <option value="States" selected>States</option>
             <option value="Hesse">Hesse</option>
@@ -112,12 +120,17 @@
     <fieldset v-if="step == 3" class="panel">
       <div class="panel-heading">
         <div class="panel-title">
-          <h3>Order Information</h3>
+          <h3>Other Information</h3>
           <h6>Step 3</h6>
         </div>
       </div>
       <div class="panel-body">
-        <vue-editor v-model="comments"></vue-editor>
+        <textarea
+          v-model="comments"
+          class="form-input"
+          name="comments"
+          placeholder="Enter other relevant Information"
+        ></textarea>
         <input
           type="button"
           name="previous"
@@ -140,19 +153,12 @@
     <fieldset v-if="step == 4" class="panel">
       <div class="panel-heading">
         <div class="panel-title">
-          <h3>Preview</h3>
+          <h3>Write Message</h3>
           <h6>Step 4</h6>
         </div>
       </div>
       <div class="panel-body">
-        <p>First Name: {{ firstName }}</p>
-        <p>Last Name: {{ lastName }}</p>
-        <p>Email: {{ email }}</p>
-        <p>Address: {{ hNumber }}</p>
-        <p>Street Name: {{ streetName }}</p>
-        <p>Postal Code: {{ postCode }}</p>
-        <p>State Name: {{ stateName }}</p>
-        <p>Message: {{ comments }}</p>
+        <vue-editor v-model="comments"></vue-editor>
 
         <input
           type="button"
@@ -192,7 +198,7 @@ export default {
       error: [],
       step: 1,
       totalSteps: 4,
-      
+
       validation: {
         firstName: {
           required
@@ -210,27 +216,78 @@ export default {
       }
     };
   },
-  computed:{
-    firstName:{ get(){ return this.$store.state.firstName},
-    set(value){this.$store.commit('setFirstName', {firstName: value})}},
+  computed: {
+    firstName: {
+      get() {
+        return this.$store.state.firstName;
+      },
+      set(value) {
+        this.$store.commit("setFirstName", { firstName: value });
+      }
+    },
 
-    lastName:{ get(){ return this.$store.state.lastName},
-    set(value){this.$store.commit('setLastName', {lastName: value})}},
-    
-    email:{ get(){ return this.$store.state.email},
-    set(value){this.$store.commit('setEmail', {email: value})}},
+    lastName: {
+      get() {
+        return this.$store.state.lastName;
+      },
+      set(value) {
+        this.$store.commit("setLastName", { lastName: value });
+      }
+    },
 
-    hNumber:{ get(){ return this.$store.state.hNumber},
-    set(value){this.$store.commit('setHNumber', {hNumber: value})}},
+    email: {
+      get() {
+        return this.$store.state.email;
+      },
+      set(value) {
+        this.$store.commit("setEmail", { email: value });
+      }
+    },
 
-    postcode:{ get(){ return this.$store.state.postcode},
-    set(value){this.$store.commit('setPostCode', {postcode: value})}},
+    hNumber: {
+      get() {
+        return this.$store.state.hNumber;
+      },
+      set(value) {
+        this.$store.commit("setHNumber", { hNumber: value });
+      }
+    },
 
-    stateName:{ get(){ return this.$store.state.stateName},
-    set(value){this.$store.commit('setStateName', {stateName: value})}},
+    streetName: {
+      get() {
+        return this.$store.state.streetName;
+      },
+      set(value) {
+        this.$store.commit("setStreetName", { streetName: value });
+      }
+    },
 
-    comments:{ get(){ return this.$store.state.comments},
-    set(value){this.$store.commit('setComments', {comments: value})}}
+    postcode: {
+      get() {
+        return this.$store.state.postcode;
+      },
+      set(value) {
+        this.$store.commit("setPostCode", { postcode: value });
+      }
+    },
+
+    stateName: {
+      get() {
+        return this.$store.state.stateName;
+      },
+      set(value) {
+        this.$store.commit("setStateName", { stateName: value });
+      }
+    },
+
+    comments: {
+      get() {
+        return this.$store.state.comments;
+      },
+      set(value) {
+        this.$store.commit("setComments", { comments: value });
+      }
+    }
   },
   methods: {
     previous_Step: function() {
@@ -242,9 +299,9 @@ export default {
     },
 
     submit: function() {
-     // confirm("Entry have been saved");
-      this.step = 1;     
-      this.$router.push({  path: "submit"});
+      // confirm("Entry have been saved");
+      this.step = 1;
+      this.$router.push({ path: "submit" });
     },
     formSubmit: function() {
       if (this.$v.$invalid) return;

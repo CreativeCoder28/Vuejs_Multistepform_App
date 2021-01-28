@@ -13,8 +13,7 @@
         </router-link>
         <a class="navlink" href="/"><i class="fas fas-2x fa-cog"></i></a>
         <router-link to="/submit">
-          <a class="navlink"><i class="fas fas-2x fa-user-circle"></i>
-          </a>
+          <a class="navlink"><i class="fas fas-2x fa-user-circle"></i> </a>
         </router-link>
       </ul>
     </nav>

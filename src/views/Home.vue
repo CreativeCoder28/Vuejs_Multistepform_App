@@ -1,5 +1,5 @@
 <template>
-  <div class="home">      
+  <div class="home">
     <Content msg="Welcome to Your Vue.js App" />
   </div>
 </template>
@@ -12,8 +12,8 @@ import Content from "../components/content";
 export default {
   name: "Home",
   components: {
-    Content,
-   // Confirmation
+    Content
+    // Confirmation
   }
 };
 </script>

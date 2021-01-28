@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    firstName: "test",
+    firstName: null,
     lastName: null,
     email: null,
     streetName: null,
@@ -15,25 +15,28 @@ export default new Vuex.Store({
     comments: null
   },
   mutations: {
-    setFirstName(state, formdata){
+    setFirstName(state, formdata) {
       state.firstName = formdata.firstName;
     },
-    setLastName(state, formdata){
+    setLastName(state, formdata) {
       state.lastName = formdata.lastName;
     },
-    setEmail(state, formdata){
+    setEmail(state, formdata) {
       state.email = formdata.email;
     },
-    setHNumber(state, formdata){
+    setHNumber(state, formdata) {
       state.hNumber = formdata.hNumber;
     },
-    setPostCode(state, formdata){
+    setStreetName(state, formdata) {
+      state.streetName = formdata.streetName;
+    },
+    setPostCode(state, formdata) {
       state.postcode = formdata.postcode;
     },
-    setStateName(state, formdata){
+    setStateName(state, formdata) {
       state.stateName = formdata.stateName;
     },
-    setComments(state, formdata){
+    setComments(state, formdata) {
       state.comments = formdata.comments;
     }
   },
